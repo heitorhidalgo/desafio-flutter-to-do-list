@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "94169401084",
+    "project_id": "desafioflutter-6df71",
+    "storage_bucket": "desafioflutter-6df71.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:94169401084:android:5eddb59d287cf904777979",
+        "android_client_info": {
+          "package_name": "br.heitorhidalgo.desafio_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqlXTjblAFPaZvpBiTU0C0J0UzmZVDqxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
