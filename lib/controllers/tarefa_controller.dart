@@ -55,4 +55,15 @@ class TarefaController extends GetxController {
   Future<void> excluirTarefa(String id) async {
     await _db.collection('tarefas').doc(id).delete();
   }
+
+  Future<void> atualizarTarefa(
+    String id,
+    String novoTitulo,
+    String novaDescricao,
+  ) async {
+    await _db.collection('tarefas').doc(id).update({
+      'titulo': novoTitulo,
+      'descricao': novaDescricao,
+    });
+  }
 }
