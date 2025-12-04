@@ -1,32 +1,35 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import '../views/home_page.dart';
+import '../views/login_page.dart';
 
 class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
   Rx<User?> firebaseUser = Rx<User?>(null);
 
   @override
   void onReady() {
     super.onReady();
-
     firebaseUser.bindStream(_auth.userChanges());
+    ever(firebaseUser, _definirTelaInicial);
+  }
+
+  void _definirTelaInicial(User? user) {
+    if (user == null) {
+      Get.offAll(() => LoginPage());
+    } else {
+      Get.offAll(() => HomePage());
+    }
   }
 
   Future<void> login(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-      Get.snackbar(
-        "Sucesso",
-        "Login realizado!",
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
     } catch (e) {
       Get.snackbar(
         "Erro no Login",
-        "Verifique e-mail e senha.",
+        e.toString(),
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -38,12 +41,6 @@ class AuthController extends GetxController {
       await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
-      );
-      Get.snackbar(
-        "Conta Criada",
-        "Você já está logado!",
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
       );
     } catch (e) {
       Get.snackbar(
