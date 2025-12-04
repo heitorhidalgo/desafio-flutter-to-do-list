@@ -6,6 +6,7 @@ class Tarefa {
   String descricao;
   bool concluida;
   String userId;
+  Timestamp? dataVencimento;
 
   Tarefa({
     this.id,
@@ -13,6 +14,7 @@ class Tarefa {
     required this.descricao,
     this.concluida = false,
     required this.userId,
+    this.dataVencimento,
   });
 
   factory Tarefa.fromDocument(DocumentSnapshot doc) {
@@ -23,6 +25,7 @@ class Tarefa {
       descricao: data['descricao'] ?? '',
       concluida: data['concluida'] ?? false,
       userId: data['userId'] ?? '',
+      dataVencimento: data['dataVencimento'],
     );
   }
 
@@ -33,6 +36,7 @@ class Tarefa {
       'concluida': concluida,
       'userId': userId,
       'data_criacao': FieldValue.serverTimestamp(),
+      'dataVencimento': dataVencimento,
     };
   }
 }
