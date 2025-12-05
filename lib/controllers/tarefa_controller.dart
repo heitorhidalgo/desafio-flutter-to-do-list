@@ -30,7 +30,11 @@ class TarefaController extends GetxController {
     );
   }
 
-  Future<void> adicionarTarefa(String titulo, String descricao) async {
+  Future<void> adicionarTarefa(
+    String titulo,
+    String descricao,
+    DateTime? data,
+  ) async {
     try {
       String uid = _auth.currentUser!.uid;
 
@@ -38,12 +42,27 @@ class TarefaController extends GetxController {
         titulo: titulo,
         descricao: descricao,
         userId: uid,
+
+        dataVencimento: data != null ? Timestamp.fromDate(data) : null,
       );
 
       await _db.collection('tarefas').add(novaTarefa.toMap());
     } catch (e) {
       Get.snackbar("Erro", "Não foi possível salvar a tarefa");
     }
+  }
+
+  Future<void> atualizarTarefa(
+    String id,
+    String novoTitulo,
+    String novaDescricao,
+    DateTime? novaData,
+  ) async {
+    await _db.collection('tarefas').doc(id).update({
+      'titulo': novoTitulo,
+      'descricao': novaDescricao,
+      'dataVencimento': novaData != null ? Timestamp.fromDate(novaData) : null,
+    });
   }
 
   Future<void> alternarConcluida(Tarefa tarefa) async {
@@ -54,16 +73,5 @@ class TarefaController extends GetxController {
 
   Future<void> excluirTarefa(String id) async {
     await _db.collection('tarefas').doc(id).delete();
-  }
-
-  Future<void> atualizarTarefa(
-    String id,
-    String novoTitulo,
-    String novaDescricao,
-  ) async {
-    await _db.collection('tarefas').doc(id).update({
-      'titulo': novoTitulo,
-      'descricao': novaDescricao,
-    });
   }
 }
